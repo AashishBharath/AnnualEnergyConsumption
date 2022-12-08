@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html class="html" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, width=device-width">
+	<title>Home</title>
+
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/foundation-rtl.css">
+    <!--<script src="../public/js/vendor/modernizr.js"></script>-->
+</head>
+<body>
+
+        <!--MENU-->
+    <div class="off-canvas position-left hide-for-large" id="offCanvas" data-off-canvas>
+        <button class="close-button" aria-label="Close menu" type="button" data-close>
+            <span aria-hidden="true">&times;</span>
+        </button>
+      
+        <ul class="menu vertical ">
+            <div class="cell small-3"><a href="/home">Home</a></div>
+            <div class="cell small-3"><a href="/energy">Energy Sources</a></div>
+            <div class="cell small-3"><a href="/state">State</a></div>
+            <div class="cell small-3"><a href="/year">Years</a></div>
+        </ul>
+    </div>
+
+    <div class="off-canvas-content" data-off-canvas-content>
+        
+      <!--FOR SMALL SCREENS-->
+      <div class="grid-x hide-for-large">
+      <div class="cell small-2 name">
+        <button type="button" class="open-right button" data-toggle="offCanvas" style="background:rgba(103, 103, 197, 0.048)">
+          <div class="menu-icon">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+          </div>
+        </button>
+      </div>
+      <div class="cell small-10 name">Energy Consumption Data</div>
+      </div>
+
+
+
+        <!--INSERT DATA CONTENT DYNAMICALLY-->
+        <div class="grid-x show-for-large" >
+            <div class="cell small-3 largeMenu"><a href="/home">Home</a></div>
+            <div class="cell small-3 largeMenu"><a href="/energy">Energy Sources</a></div>
+            <div class="cell small-3 largeMenu"><a href="/state">State</a></div>
+            <div class="cell small-3 largeMenu"><a href="/year">Years</a></div>
+
+        </div>
+
+        <div class ='grid-x show-for-large'>
+        <h1 class ="cell small-12" id="data_head">Energy Consumption Dataset Dynamic Webserver</h1>
+        </div>
+        <div class="clear"></div>
+
+        <div>
+            <p>This is a dynamic web server created to view energy consumption in three unique ways. Climate change is a growing problem, and 
+              we hope this web server sheds some light on the our conusmption of energy causing climate issues.
+            </p>
+        </div>
+    </div>
+    
+        
+        <script src="/js/vendor.js"></script>
+        <script src="/js/foundation.js"></script>
+        <script type="application/javascript">
+        $(document).foundation();
+        </script>
+</body>
+</html>

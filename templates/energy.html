@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="html" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, width=device-width">
+	<title>Energy Consumption by Source</title>
+
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/foundation-rtl.css">
+    <!--<script src="../public/js/vendor/modernizr.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+        <!--MENU-->
+    <div class="off-canvas position-left hide-for-large" id="offCanvas" data-off-canvas>
+        <button class="close-button" aria-label="Close menu" type="button" data-close>
+            <span aria-hidden="true">&times;</span>
+        </button>
+      
+        <ul class="menu vertical ">
+            <div class="cell small-3"><a href="/home">Home</a></div>
+            <div class="cell small-3"><a href="/energy">Energy Sources</a></div>
+            <div class="cell small-3"><a href="/state">State</a></div>
+            <div class="cell small-3"><a href="/year">Years</a></div>
+        </ul>
+    </div>
+
+    <div class="off-canvas-content" data-off-canvas-content>
+        
+      <!--FOR SMALL SCREENS-->
+      <div class="grid-x hide-for-large">
+      <div class="cell small-2 name">
+        <button type="button" class="open-right button" data-toggle="offCanvas" style="background:rgba(103, 103, 197, 0.048)">
+          <div class="menu-icon">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+          </div>
+        </button>
+      </div>
+
+      <div class="cell small-10 name">Energy Consumption for %%DATANAME%%</div>
+      <div class="cell small-10"><img class="energy_img" src="%%ENERGY_IMAGE%%" alt="%%ENERGY_ALT_TEXT%%" /></div>
+      <a href="%%PREVIOUS%%" class="previous">&laquo; Previous</a>
+      <a href="%%NEXT%%" class="next">Next &raquo;</a>
+      </div>
+
+
+
+        <!--INSERT DATA CONTENT DYNAMICALLY-->
+        <div class="grid-x show-for-large" >
+            <div class="cell small-3 largeMenu"><a href="/home">Home</a></div>
+            <div class="cell small-3 largeMenu"><a href="/energy">Energy Sources</a></div>
+            <div class="cell small-3 largeMenu"><a href="/state">State</a></div>
+            <div class="cell small-3 largeMenu"><a href="/year">Years</a></div>
+        </div>
+
+        <!-- FILTER / DROPDOWN -->
+        <h1 class ="cell small-12" id="data_head">Energy Consumption for %%DATANAME%%</h1>
+        <button class="button" type="button" data-toggle="example-dropdown">Filter</button>
+        <div class="dropdown-pane" id="example-dropdown" data-dropdown data-auto-focus="true">
+            <a href="/energy/coal">Coal (Short Tons)</a><br>
+            <a href="/energy/geothermal">Geothermal (Billion Btu)</a><br>
+            <a href="/energy/naturalgas">Natural Gas (McfA)</a><br>
+            <a href="/energy/othergas">Other Gases (Billion Btu)</a><br>
+            <a href="/energy/petroleum">Petroleum (Barrels)</a>
+        </div>
+
+        <div class ='grid-x show-for-large'>
+        <div class="cell small-12"><img class="energy_img" src="%%ENERGY_IMAGE%%" alt="%%ENERGY_ALT_TEXT%%" /></div>
+        <a href="%%PREVIOUS%%" class="previous">&laquo; Previous</a>
+        <a href="%%NEXT%%" class="next">Next &raquo;</a>
+        </div>
+        <div class="clear"></div>
+        <div class = 'grid-x'>
+            <div class="cell small-12"><canvas id="myChart" width="700" height="700" style="margin-top: 5%;"></canvas></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>State</th>
+                    <th>Consumption</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--INSERT DATA CONTENT DYNAMICALLY VIA QUERIES-->
+                %%DATA%%
+            </tbody>
+        </table>
+        </div>
+    
+        
+        <script src="/js/vendor.js"></script>
+        <script src="/js/foundation.js"></script>
+        <script type="application/javascript">
+        $(document).foundation();
+        </script>
+
+    <script>
+        var energy_total = %%ENERGYTOTAL%%;
+        var years = %%YEARSLIST%%;
+
+        let ctx = document.getElementById('myChart').getContext('2d');
+        ctx.canvas.width = 1000;
+        ctx.canvas.height = 800;
+        let myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: years,
+            datasets: [
+                {
+                label: 'US Total %%DATANAME%% Consumption by Year',
+                data: energy_total,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+
+                borderColor: [
+                    'rgb(255, 99, 132)'
+                ],
+                fill: true,
+                borderWidth:1
+                }]
+            }});
+    </script>
+
+</body>
+
+</html>

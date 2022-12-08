@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="html" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, width=device-width">
+	<title>Energy Consumption by Year</title>
+
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/foundation-rtl.css">
+    <!--<script src="../public/js/vendor/modernizr.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+        <!--MENU-->
+    <div class="off-canvas position-left hide-for-large" id="offCanvas" data-off-canvas>
+        <button class="close-button" aria-label="Close menu" type="button" data-close>
+            <span aria-hidden="true">&times;</span>
+        </button>
+      
+        <ul class="menu vertical ">
+            <div class="cell small-3"><a href="/home">Home</a></div>
+            <div class="cell small-3"><a href="/energy">Energy Sources</a></div>
+            <div class="cell small-3"><a href="/state">State</a></div>
+            <div class="cell small-3"><a href="/year">Years</a></div>
+        </ul>
+    </div>
+
+    <div class="off-canvas-content" data-off-canvas-content>
+        
+      <!--FOR SMALL SCREENS-->
+      <div class="grid-x hide-for-large">
+        <div class="cell small-2 name">
+          <button type="button" class="open-right button" data-toggle="offCanvas" style="background:rgba(103, 103, 197, 0.048)">
+            <div class="menu-icon">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </div>
+          </button>
+        </div>
+  
+        <div class="cell small-10 name">Energy Consumption for %%DATANAME%%</div>
+        <div class="cell small-10"><img class="year_img" src="%%YEAR_IMAGE%%" alt="%%YEAR_ALT_TEXT%%" /></div>
+        <a href="%%PREVIOUS%%" class="previous">&laquo; Previous</a>
+        <a href="%%NEXT%%" class="next">Next &raquo;</a>
+        </div>
+
+
+
+        <!--INSERT DATA CONTENT DYNAMICALLY-->
+        <div class="grid-x show-for-large" >
+            <div class="cell small-3 largeMenu"><a href="/home">Home</a></div>
+            <div class="cell small-3 largeMenu"><a href="/energy">Energy Sources</a></div>
+            <div class="cell small-3 largeMenu"><a href="/state">State</a></div>
+            <div class="cell small-3 largeMenu"><a href="/year">Years</a></div>
+        </div>
+
+        <!-- FILTER / DROPDOWN -->
+        <h1 class ="cell small-12" id="data_head">Energy Consumption for %%DATANAME%%</h1>
+        <button class="button" type="button" data-toggle="example-dropdown">Filter</button>
+        <div class="dropdown-pane" id="example-dropdown" data-dropdown data-auto-focus="true">
+            <a href="/year/1990">1990</a> | <a href="/year/1991">1991</a> | <a href="/year/1992">1992</a> | <a href="/year/1993">1993</a> | <a href="/year/1994">1994</a><br>
+            <a href="/year/1995">1995</a> | <a href="/year/1996">1996</a> | <a href="/year/1997">1997</a> | <a href="/year/1998">1998</a> | <a href="/year/1999">1999</a><br>
+            <a href="/year/2000">2000</a> | <a href="/year/2001">2001</a> | <a href="/year/2002">2002</a> | <a href="/year/2003">2003</a> | <a href="/year/2004">2004</a><br>
+            <a href="/year/2005">2005</a> | <a href="/year/2006">2006</a> | <a href="/year/2007">2007</a> | <a href="/year/2008">2008</a> | <a href="/year/2009">2009</a><br>
+            <a href="/year/2010">2010</a> | <a href="/year/2011">2011</a> | <a href="/year/2012">2012</a> | <a href="/year/2013">2013</a> | <a href="/year/2014">2014</a><br>
+            <a href="/year/2015">2015</a> | <a href="/year/2016">2016</a> | <a href="/year/2017">2017</a> | <a href="/year/2018">2018</a> | <a href="/year/2019">2019</a><br>
+            <a href="/year/2020">2020</a> | <a href="/year/2021">2021</a>
+        </div>
+        
+
+        <div class ='grid-x show-for-large'>
+        <div class = 'grid-x'>
+            <div class="cell small-12"><img class="year_img" src="%%YEAR_IMAGE%%" alt="%%YEAR_ALT_TEXT%%" /></div>
+            <a href="%%PREVIOUS%%" class="previous">&laquo; Previous</a>
+            <a href="%%NEXT%%" class="next">Next &raquo;</a>
+        </div>
+        </div>
+        <div class="clear"></div>
+        
+        <div class = 'grid-x'>
+            <div class="cell small-12 large-12"><canvas id="myChart" width="700" height="700" style="margin-top: 5%;"></canvas></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>State</th>
+                    <th>Energy Source</th>
+                    <th>Consumption</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--INSERT DATA CONTENT DYNAMICALLY VIA QUERIES-->
+                %%DATA%%
+            </tbody>
+        </table>
+        </div>
+
+    
+        
+        <script src="/js/vendor.js"></script>
+        <script src="/js/foundation.js"></script>
+        <script type="application/javascript">
+        $(document).foundation();
+        </script>
+
+    <script>
+        var coal_year_total = %%COALTOTAL%%;
+        var petrol_year_total = %%PETROLTOTAL%%;
+        var natgas_year_total = %%NATGASTOTAL%%;
+        var othergas_year_total = %%OTHERGASTOTAL%%;
+        var geo_year_total = %%GEOTOTAL%%;
+
+        let ctx = document.getElementById('myChart').getContext('2d');
+        ctx.canvas.width = 1000;
+        ctx.canvas.height = 800;
+        let myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Coal",'Petroleum','Natural Gas','Other Gas','Geothermal'],
+            datasets: [
+                {
+                label: 'Energy Consumption for %%DATANAME%%',
+                data: [coal_year_total,petrol_year_total,natgas_year_total,othergas_year_total,geo_year_total],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(75, 165, 205, 0.2)'
+                ],
+
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgba(75, 165, 205)'
+                ],
+                fill: true,
+                borderWidth:1
+                }]
+            },
+        options: {
+            responsive: true
+        }});
+    </script>
+</body>
+</html>
